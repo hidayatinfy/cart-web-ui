@@ -8,6 +8,13 @@ function showCart(){
     cartProduct();
 }
 
+/*
+    Function : cartData
+    Purpose: This is actual cart list which can show my cart product list
+    Author: Tushar Dimble
+    Date: 9th Aug 2020
+*/
+
 function cartData(myCart){
     document.getElementById('mycartdata').innerHTML = "";
     let total = 0;
@@ -49,6 +56,13 @@ function cartData(myCart){
     document.getElementById("item-total").innerHTML = total;
 }
 
+
+/*
+    Function : cartProduct
+    Purpose: This function have list of cart item
+    Author: Tushar Dimble
+    Date: 9th Aug 2020
+*/
 function cartProduct(){
     let myCart = [
         {
@@ -70,6 +84,12 @@ function cartProduct(){
     cartData(myCart);
 }
 
+/*
+    Function : Window On load
+    Purpose: This function call when window is loaded
+    Author: Tushar Dimble
+    Date: 9th Aug 2020
+*/
 window.onload = function(){
     cartProduct();
 };

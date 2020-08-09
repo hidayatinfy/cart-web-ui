@@ -5,30 +5,16 @@ function showCart(){
     }else{
         cart.style.display = "none";
     }
-    cartData();
+    cartProduct();
 }
 
-function cartData(){
-    let myCart = [
-        {
-            image: '1.jpeg',
-            name: 'cake1',
-            price: 430
-        },
-        {
-            image: '2.jpeg',
-            name: 'cake2',
-            price: 270
-        },
-        {
-            image: '1.jpeg',
-            name: 'cake3',
-            price: 320
-        },
-    ];
+function cartData(myCart){
+    document.getElementById('mycartdata').innerHTML = "";
+    let total = 0;
     let myCartLength = myCart.length;
     
     for(let i=0; i<myCart.length;i++){
+        total += myCart[i]['price'];
         // Main Div
         let iDiv = document.createElement('div');
         iDiv.className = 'cart-item d-flex justify-content-between text-capitalize my-3';
@@ -58,10 +44,12 @@ function cartData(){
         iDiv.appendChild(sSpan);
 
     }
-        
+    document.getElementById("cart-total").innerHTML = total;
+    document.getElementById("item-count").innerHTML = myCartLength;
+    document.getElementById("item-total").innerHTML = total;
 }
 
-function cartData1(){
+function cartProduct(){
     let myCart = [
         {
             image: '1.jpeg',
@@ -69,7 +57,7 @@ function cartData1(){
             price: 430
         },
         {
-            image: 'cake-2.jpeg',
+            image: '2.jpeg',
             name: 'cake2',
             price: 270
         },
@@ -79,17 +67,9 @@ function cartData1(){
             price: 320
         },
     ];
-    let myCartLength = myCart.length;
-    document.getElementById("item-count").innerHTML = myCartLength;
-    let i;
-    let text = "";
-    let total = 0;
-    for(let i in myCart){
-        total += myCart[i]['price'];
-        text += "<div class='cart-item d-flex justify-content-between text-capitalize my-3'><img src='assets/images/"+myCart[i]['image']+"' class='img-fluid rounded-circle' alt=''><div class='item-text'> <p id='cart-item-title' class='font-weight-bold mb-0'>"+myCart[i]['name']+"</p><span>$</span><span id='cart-item-price' class='cart-item-price'>"+myCart[i]['price']+"</span></div></div>"
-    }
-    console.log(total);
-    document.getElementById("cart-total").innerHTML = total;
-    //document.getElementById("item-total").innerHTML = total;
-    document.getElementById("mycartdata").innerHTML = text;
+    cartData(myCart);
 }
+
+window.onload = function(){
+    cartProduct();
+};

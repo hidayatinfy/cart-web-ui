@@ -34,21 +34,21 @@ function cartData(myCart){
         iDiv.appendChild(imgDiv);
 
         // Name Div
-        let iNamePriceDiv = document.createElement('item-text');
-        iNamePriceDiv.className = 'cart-item d-flex justify-content-between text-capitalize my-3';
+        let iNamePriceDiv = document.createElement('div');
+        iNamePriceDiv.className = 'item-text';
         iDiv.appendChild(iNamePriceDiv);
 
         // Paragraph Tag
         let sName = document.createElement('p');
         sName.className = 'font-weight-bold mb-0';
         sName.innerHTML = myCart[i]['name'];
-        iDiv.appendChild(sName);
+        iNamePriceDiv.appendChild(sName);
 
         // Span Price
         let sSpan = document.createElement('span');
         sSpan.className = 'cart-item-price';
         sSpan.innerHTML = myCart[i]['price'];
-        iDiv.appendChild(sSpan);
+        iNamePriceDiv.appendChild(sSpan);
 
     }
     document.getElementById("cart-total").innerHTML = total;
@@ -63,7 +63,8 @@ function cartData(myCart){
     Author: Tushar Dimble
     Date: 9th Aug 2020
 */
-function cartProduct(){
+function cartProduct(myproduct){
+
     let myCart = [
         {
             image: '1.jpeg',
@@ -83,6 +84,8 @@ function cartProduct(){
     ];
     cartData(myCart);
 }
+
+
 
 /*
     Function : Window On load

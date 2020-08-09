@@ -25,11 +25,32 @@
                 </div>
 
                 <div class="nav-info-items d-none d-lg-flex ">
-                    <div id="cart-info" class="nav-info align-items-center cart-info d-flex justify-content-between mx-lg-5">
-                        
+                    <div id="cart-info" class="nav-info align-items-center cart-info d-flex justify-content-between mx-lg-5" onclick="showCart();">
+                        <span class="cart-info__icon mr-lg-3"><i class="fas fa-shopping-cart"></i></span>
+                        <p class="mb-0 text-capitalize"><span id="item-count"></span> items - $<span class="item-total"> </span></p>
                     </div>
                 </div>
             </nav>
+            <div class="container-fluid">
+
+                <div id="cart" class="cart show-cart" style="display: none;">
+                    <div id="mycartdata">
+                       
+                    </div>
+                    
+                    <div class="cart-total-container d-flex justify-content-around text-capitalize mt-5">
+                    <h5>total</h5>
+                    <h5> $ <strong id="cart-total" class="font-weight-bold"> </strong> </h5>
+                    </div>
+                    
+                    <div class="cart-buttons-container mt-3 d-flex justify-content-between">
+                    <a href="#" id="clear-cart" class="btn btn-outline-secondary btn-black text-uppercase">clear cart</a>
+                    <a href="#" class="btn btn-outline-secondary text-uppercase btn-pink">checkout</a>
+                    </div>
+                    
+                </div>
+            </div>
         </header>
+        <script src="assets/js/custom.js"></script>
     </body>
 </html>

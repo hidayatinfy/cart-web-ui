@@ -34,7 +34,7 @@
             </nav>
             <div class="container-fluid">
 
-                <div id="cart" class="cart show-cart" style="display: none;">
+                <div id="cart" class="cart show-cart" style="display: none;z-index: 999;">
                     <div id="mycartdata">
                        
                     </div>
@@ -134,7 +134,7 @@
             
                             var singleItem = document.getElementById('store-items');
                             for(let i = 0; i < storeItem.length; i++){
-                            console.log(storeItem[i]);   
+                            //console.log(storeItem[i]);   
                             singleItem.innerHTML += `  
                             <!-- single item --> <div id="ourStoreItem" class="col-10 col-sm-6 col-lg-4 mx-auto my-3 store-item">
                           <div class="card ">

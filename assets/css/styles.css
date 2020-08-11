@@ -38,6 +38,17 @@
 
 .cart {
     position: absolute;
+    /* background: rgba(255, 255, 255, 0.5); */
+}
+
+.cart {
+  position: absolute;
+  min-height: 10rem;
+  top: 77px;
+  right: 0;
+  transition: all 0.3s ease-in-out;
+  background: rgb(197 125 125 / 50%);
+  overflow: hidden;
 }
 
 *{

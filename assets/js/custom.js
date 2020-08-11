@@ -6,6 +6,7 @@ function showCart(){
         cart.style.display = "none";
     }
     cartProduct();
+   
 }
 
 /*
@@ -21,6 +22,7 @@ function cartData(myCart){
     let myCartLength = myCart.length;
     
     for(let i=0; i<myCart.length;i++){
+       
         total += myCart[i]['price'];
         // Main Div
         let iDiv = document.createElement('div');

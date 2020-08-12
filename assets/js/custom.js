@@ -1,72 +1,15 @@
-function showCart(){
+showCart = () => {
     let cart = document.getElementById("cart");
     if(cart.style.display === "none"){
         cart.style.display = "block";
     }else{
         cart.style.display = "none";
     }
-    cartProduct();
-   
-}
-
-/*
-    Function : cartData
-    Purpose: This is actual cart list which can show my cart product list
-    Author: Tushar Dimble
-    Date: 9th Aug 2020
-*/
-
-function cartData(myCart){
-    document.getElementById('mycartdata').innerHTML = "";
-    let total = 0;
-    let myCartLength = myCart.length;
-    
-    for(let i=0; i<myCart.length;i++){
-       
-        total += myCart[i]['price'];
-        // Main Div
-        let iDiv = document.createElement('div');
-        iDiv.className = 'cart-item d-flex justify-content-between text-capitalize my-3';
-        document.getElementById('mycartdata').appendChild(iDiv);
-        
-        // For Image
-        let imgDiv = document.createElement('IMG');
-        imgDiv.className = 'img-fluid rounded-circle';
-        imgDiv.setAttribute("src", "assets/images/"+myCart[i]['image']);
-        iDiv.appendChild(imgDiv);
-
-        // Name Div
-        let iNamePriceDiv = document.createElement('div');
-        iNamePriceDiv.className = 'item-text';
-        iDiv.appendChild(iNamePriceDiv);
-
-        // Paragraph Tag
-        let sName = document.createElement('p');
-        sName.className = 'font-weight-bold mb-0';
-        sName.innerHTML = myCart[i]['name'];
-        iNamePriceDiv.appendChild(sName);
-
-        // Span Price
-        let sSpan = document.createElement('span');
-        sSpan.className = 'cart-item-price';
-        sSpan.innerHTML = myCart[i]['price'];
-        iNamePriceDiv.appendChild(sSpan);
-
-    }
-    document.getElementById("cart-total").innerHTML = total;
-    document.getElementById("item-count").innerHTML = myCartLength;
-    document.getElementById("item-total").innerHTML = total;
+    cartData();
 }
 
 
-/*
-    Function : cartProduct
-    Purpose: This function have list of cart item
-    Author: Tushar Dimble
-    Date: 9th Aug 2020
-*/
-function cartProduct(myproduct){
-
+cartProduct = () => {
     let myCart = [
         {
             image: '1.jpeg',
@@ -84,17 +27,74 @@ function cartProduct(myproduct){
             price: 320
         },
     ];
-    cartData(myCart);
+    return myCart;
 }
 
-
-
-/*
-    Function : Window On load
-    Purpose: This function call when window is loaded
-    Author: Tushar Dimble
-    Date: 9th Aug 2020
-*/
 window.onload = function(){
-    cartProduct();
+    cartData();
 };
+
+cartData = () => {
+    const myCart = cartProduct();
+    
+    document.getElementById('mycartdata').innerHTML = "";
+    let total = 0;
+    let myCartLength = myCart.length;
+    
+    myCart.map(function(data,index){
+        total += data['price'];
+        createUi(data['name'],data['image'],data['price']);
+    });
+
+    document.getElementById("cart-total").innerHTML = total;
+    document.getElementById("item-count").innerHTML = myCartLength;
+    document.getElementById("item-total").innerHTML = total;
+}
+
+removeCartItem = (removeProductName) => {
+    const myCart = cartProduct();
+
+    const filteredProduct = myCart.filter((item) => item.name !== removeProductName);
+    console.log(filteredProduct);
+}
+
+createUi = (name,img,price) => {
+    let iDiv = document.createElement('div');
+    iDiv.className = 'cart-item d-flex justify-content-between text-capitalize my-3';
+    document.getElementById('mycartdata').appendChild(iDiv);
+    
+    // For Image
+    let imgDiv = document.createElement('IMG');
+    imgDiv.className = 'img-fluid rounded-circle';
+    imgDiv.setAttribute("src", "assets/images/"+img);
+    iDiv.appendChild(imgDiv);
+
+    // Name Div
+    let iNamePriceDiv = document.createElement('div');
+    iNamePriceDiv.className = 'item-text';
+    iDiv.appendChild(iNamePriceDiv);
+
+    // Paragraph Tag
+    let sName = document.createElement('p');
+    sName.className = 'font-weight-bold mb-0';
+    sName.innerHTML = name;
+    iNamePriceDiv.appendChild(sName);
+
+    // Span Price
+    let sSpan = document.createElement('span');
+    sSpan.className = 'cart-item-price';
+    sSpan.innerHTML = price;
+    iNamePriceDiv.appendChild(sSpan);
+    
+    // For Delete a Tag
+    let deleteanchor = document.createElement('a');
+    deleteanchor.className = 'cart-item-remove';
+    iDiv.appendChild(deleteanchor);
+
+    // Icon for delete
+    let deleteIcon = document.createElement('i');
+    deleteIcon.className = 'fa fa-trash';
+    deleteanchor.appendChild(deleteIcon);
+    deleteIcon.setAttribute('onclick', 'removeCartItem(\'' + name + '\')');
+}
+

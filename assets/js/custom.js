@@ -34,7 +34,7 @@ window.onload = function(){
     cartData();
 };
 
-cartData = () => {
+let cartData = () => {
     const myCart = cartProduct();
     
     document.getElementById('mycartdata').innerHTML = "";

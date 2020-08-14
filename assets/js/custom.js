@@ -82,7 +82,6 @@ function cartProduct(myproduct){
             price: 320
         },
     ];
-    cartData(myCart);
 }
 
 

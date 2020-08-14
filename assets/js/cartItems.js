@@ -146,7 +146,6 @@ let productList = storeItem.map(function(data,index){
 let addIntoCartItem = (index) =>{
     alert('Add into cart');
     myCart.unshift(storeItem[index]);
-    console.log(myCart);
 }
 
 

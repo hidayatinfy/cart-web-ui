@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Javascript Cart</title>
+        <title>Javascript Cart Project</title>
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/styles.css">
         <script src="https://use.fontawesome.com/4be9b5539f.js"></script>
@@ -28,7 +28,7 @@
                 <div class="nav-info-items d-none d-lg-flex ">
                     <div id="cart-info" class="nav-info align-items-center cart-info d-flex justify-content-between mx-lg-5" onclick="showCart();">
                         <span class="cart-info__icon mr-lg-3"><i class="fa fa-shopping-cart"></i></span>
-                        <p class="mb-0 text-capitalize"><span id="item-count"></span> items - $<span class="item-total"> </span></p>
+                        <p class="mb-0 text-capitalize"><span id="item-count"></span> items - $<span class="item-total" id="item-total"> </span></p>
                     </div>
                 </div>
             </nav>
@@ -45,29 +45,28 @@
                     </div>
                     
                     <div class="cart-buttons-container mt-3 d-flex justify-content-between">
-                    <a href="#" id="clear-cart" class="btn btn-outline-secondary btn-black text-uppercase">clear cart</a>
+                    <a href="#" id="clear-cart" class="btn btn-outline-secondary btn-black text-uppercase" onclick="clearCart()">clear cart</a>
                     <a href="#" class="btn btn-outline-secondary text-uppercase btn-pink">checkout</a>
                     </div>
                     
                 </div>
             </div>
-        </header>
-        <section id="store" class="store py-5">
-            <div class="container">
-              <!-- section title -->
-              <div class="row">
-                <div class="col-10 mx-auto col-sm-6 text-center">
-                  <h1 class="text-capitalize">our <strong class="banner-title ">store</strong></h1>
+          </header>
+          <section id="store" class="store py-5">
+              <div class="container">
+                <!-- section title -->
+                <div class="row">
+                  <div class="col-10 mx-auto col-sm-6 text-center">
+                    <h1 class="text-capitalize">our <strong class="banner-title ">store</strong></h1>
+                  </div>
                 </div>
-              </div>
-    
-              <!-- store  items-->
-              <div class="row" id="store-items"></div>
-          </div>
-        </section>
+      
+                <!-- store  items-->
+                <div class="row" id="store-items"></div>
+            </div>
+          </section>
+  
+          <script type="text/javascript" src="assets/js/ourStore.js"></script>
+      </body>
+  </html>
 
-        <script type="text/javascript" src="assets/js/custom.js"></script>
-        <script type="text/javascript" src="assets/js/cartItems.js"></script>
-
-    </body>
-</html>

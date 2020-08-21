@@ -1,72 +1,95 @@
+/*
+    myCart Array
+*/
 let myCart= [];
 
 /*
-    Purpose: This is list of Product 
+    Purpose : This is list of product
 */
-
-let storeItem =  [
+let storeItem1 =  [
     {
-        image : "sweets-1.jpeg",
-        name: "sweet item",
-        price: 5
+        category: "sweet",
+        item:[
+            {
+                image : "sweets-1.jpeg",
+                name: "sweet item",
+                price: 5
+            },
+            {
+                image: "sweets-2.jpeg",
+                name: "sweet item",
+                price: 10
+            },
+            {
+                image: "sweets-3.jpeg",
+                name: "Sweet item",
+                price: 15
+            }
+        ]
     },
     {
-        image: "cupcake-1.jpeg",
-        name: "Cupcake Item",
-        price: 5
+        category: "cupcake",
+        item:[
+            {
+                image: "cupcake-1.jpeg",
+                name: "Cupcake Item",
+                price: 5
+            },
+            {
+                image: "cupcake-2.jpeg",
+                name: "Cupcake item",
+                price: 10
+            },
+            {
+                image: "cupcake-3.jpeg",
+                name: "Cupcake Item",
+                price: 15
+            }
+        ]
     },
     {
-        image: "cake-1.jpeg",
-        name: "Cake Item",
-        price: 5
+        category: "cake",
+        item:[
+            {
+                image: "cake-1.jpeg",
+                name: "Cake Item",
+                price: 5
+            },
+            {
+                image: "cake-2.jpeg",
+                name: "Cake Item",
+                price: 10
+            },
+            {
+                image: "cake-3.jpeg",
+                name: "Cake item",
+                price: 15
+            }
+        ]
     },
     {
-        image: "doughnut-1.jpeg",
-        name: "Dougnut Item",
-        price: 5
-    },
-    {
-        image: "sweets-2.jpeg",
-        name: "sweet item",
-        price: 10
-    },
-    {
-        image: "cupcake-2.jpeg",
-        name: "Cupcake item",
-        price: 10
-    },
-    {
-        image: "cake-2.jpeg",
-        name: "Cake Item",
-        price: 10
-    },
-    {
-        image: "doughnut-2.jpeg",
-        name: "Dougnut item",
-        price: 10
-    },
-    {
-        image: "sweets-3.jpeg",
-        name: "Sweet item",
-        price: 15
-    }, 
-    {
-        image: "cupcake-3.jpeg",
-        name: "Cupcake Item",
-        price: 15
-    },
-    {
-        image: "cake-3.jpeg",
-        name: "Cake item",
-        price: 15
-    },
-    {
-        image: "doughnut-3.jpeg",
-        name: "Dougnut item",
-        price: 15
+        category: "doughnut",
+        item:[
+            {
+                image: "doughnut-1.jpeg",
+                name: "Dougnut Item",
+                price: 5
+            },
+            
+            {
+                image: "doughnut-2.jpeg",
+                name: "Dougnut item",
+                price: 10
+            },
+            
+            {
+                image: "doughnut-3.jpeg",
+                name: "Dougnut item",
+                price: 15
+            }
+        ]
     }
-
-]; 
+];
 
 /*
     Function :  setAttributes()
@@ -79,11 +102,25 @@ let setAttributes = (element,attribute) => {
 }
 
 /*
+    Function :  generateButtonUI()
+    Purpose: It will create dynamic button
+*/
+let generateButtonUI = (category) => {
+    let filterBtn = document.createElement('a');
+    setAttributes(filterBtn, {"class": "btn btn-outline-secondary btn-black text-uppercase filter-btn m-2","href":"#", "onclick" :"displayProduct(\'" + category + "\')"});
+    let btnText = document.createTextNode(category);
+    filterBtn.appendChild(btnText);
+    document.getElementById('filterBtn').appendChild(filterBtn);
+}
+
+let singleItem = document.getElementById('store-items');
+
+/*
     Function :  singleStoreItem()
     Purpose: It will create dynamic UI(Product List which is displayed in index page)
 */
-const singleStoreItem = (x, index) =>{
-    
+const singleStoreItem = (x, index,category) =>{
+   
     let mainWrapper = document.createElement('div');
     setAttributes(mainWrapper,{'class':'col-10 col-sm-6 col-lg-4 mx-auto my-3 store-item'});
 
@@ -100,7 +137,7 @@ const singleStoreItem = (x, index) =>{
     setAttributes(storeIconWrap,{'class':'store-item-icon'});
 
     let storeIcon = document.createElement('i');
-    setAttributes(storeIcon,{'class':'fa fa-shopping-cart', 'onclick': 'addIntoCartItem('+ index +')'});
+    setAttributes(storeIcon,{'class':'fa fa-shopping-cart', 'onclick': 'addIntoCartItem(\'' + x.image + '\',\'' + x.name + '\',' + x.price + ')'});
 
     let cardBody = document.createElement('div');
     setAttributes(cardBody,{'class':'card-body'});
@@ -142,79 +179,69 @@ const singleStoreItem = (x, index) =>{
     singleItem.appendChild(mainWrapper);  
 }
 
-let singleItem = document.getElementById('store-items');
-
-
-let productList = storeItem.map(function(data,index){
-    singleStoreItem(data,index);
-});
-
 /*
-    Function :  addIntoCartItem()
-    Purpose: This is used to add item in cart
+    Function :  hideItem()
+    Purpose: It will used to hide item after filter
 */
-let addIntoCartItem = (index) =>{
-    alert('Add into cart');
-    myCart.unshift(storeItem[index]);
-    cartData();
-}
-
-
-/*
-    Function :  showCart()
-    Purpose: to display my cart list
-*/
-
-let showCart = () => {
-    let cart = document.getElementById("cart");
-    if(cart.style.display === "none"){
-        cart.style.display = "block";
-    }else{
-        cart.style.display = "none";
+let hideItem = () => {
+    let hideItem = document.getElementsByClassName('store-item');
+    for (let i=0;i<hideItem.length;i+=1){
+        hideItem[i].style.display = 'none';
     }
 }
 
 /*
-    Function :  cartData()
-    Purpose: To show my cart list as well as total in detail
+    Function :  displayProduct()
+    Purpose: It will used to Display Product
 */
-
-let cartData = () => {
-    document.getElementById('mycartdata').innerHTML = "";
-    let total = 0;
-    let myCartLength = myCart.length;
-    
-    myCart.map(function(data,index){
-        total += data['price'];
-        createUi(data,index);
+let displayProduct = (category) => {
+    hideItem();
+    let productList = storeItem1.map(function(data,index){
+        if(data.category == category){
+            data.item.map(function(data1,index1){
+                singleStoreItem(data1,index1,data.category);
+            });
+        }else if(category == "all"){
+            data.item.map(function(data1,index1){
+                singleStoreItem(data1,index1,'');
+            });
+        }
     });
-
-    document.getElementById("cart-total").innerHTML = total;
-    document.getElementById("item-count").innerHTML = myCartLength;
-    document.getElementById("item-total").innerHTML = total;
 }
 
 /*
-    Function :  removeCartItem()
-    Purpose: To remove any product from cart list
+    Function :  displayProduct1()
+    Purpose: It will used to Display Product
 */
-let removeCartItem = (removeProductIndex) => {
-    myCart.splice(removeProductIndex,1);
-    cartData();
+let displayProduct1 = (category) => {
+    let productList = storeItem1.map(function(data,index){
+        if(data.category == category){
+            data.item.map(function(data1,index1){
+                singleStoreItem(data1,index1);
+            });
+        }else if(category == "all"){
+            data.item.map(function(data1,index1){
+                singleStoreItem(data1,index1);
+            });
+        }
+    });
 }
 
+
 /*
-    Function :  clearCart()
-    Purpose: To clear cart list
+    Function :  displayBtn()
+    Purpose: It will used to Display Button
 */
-let clearCart = () => {
-    myCart.splice(0,myCart.length);
-    cartData();
+let displayBtn = () => {
+    generateButtonUI('all')
+    storeItem1.map(function(data,index){
+        generateButtonUI(data.category);
+    });
 }
 
 /*
     Function :  createUi()
-    Purpose: It will create dynamic UI(div and other html)
+    Purpose: It will used to Create UI of my Cart List
 */
 let createUi = (productData,index) => {
     let iDiv = document.createElement('div');
@@ -255,6 +282,80 @@ let createUi = (productData,index) => {
 }
 
 /*
-    Purpose: To display Cart List continue
+    Function :  showCart()
+    Purpose: It will used to show cart List
 */
+let showCart = () => {
+    let cart = document.getElementById("cart");
+    if(cart.style.display === "none"){
+        cart.style.display = "block";
+    }else{
+        cart.style.display = "none";
+    }
+}
+
+/*
+    Function :  showCart()
+    Purpose: to display my cart list
+*/
+let cartData = () => {
+    document.getElementById('mycartdata').innerHTML = "";
+    let total = 0;
+    let myCartLength = myCart.length;
+  
+    myCart.map(function(data,index){
+        total += data['price'];
+        createUi(data,index);
+    });
+
+    document.getElementById("cart-total").innerHTML = total;
+    document.getElementById("item-count").innerHTML = myCartLength;
+    document.getElementById("item-total").innerHTML = total;
+}
+
+/*
+    Function :  addIntoCartItem()
+    Purpose: This is used to add item in cart
+*/
+
+let addIntoCartItem = (image,name,price) =>{
+    let itemObj = {
+        image : image,
+        name: name,
+        price: price
+    };
+    alert('Add into cart');
+    myCart.unshift(itemObj);
+    cartData();
+}
+
+/*
+    Function :  removeCartItem()
+    Purpose: To remove any product from cart list
+*/
+let removeCartItem = (removeProductIndex) => {
+    myCart.splice(removeProductIndex,1);
+    cartData();
+}
+
+/*
+    Function :  clearCart()
+    Purpose: To clear cart list
+*/
+let clearCart = () => {
+    myCart.splice(0,myCart.length);
+    cartData();
+}
+
+displayProduct1("all");
+
+displayBtn();
+
 cartData();
+
+
+
+
+
+
+

@@ -194,10 +194,14 @@ let hideItem = () => {
     Function :  displayProduct()
     Purpose: It will used to Display Product
 */
+let currentItems =[];
 let displayProduct = (category) => {
     hideItem();
+    currentItems =[];
     let productList = storeItem1.map(function(data,index){
         if(data.category == category){
+            currentItems.push(data);
+            // console.log(data);
             data.item.map(function(data1,index1){
                 singleStoreItem(data1,index1,data.category);
             });
@@ -206,6 +210,7 @@ let displayProduct = (category) => {
                 singleStoreItem(data1,index1,'');
             });
         }
+        // console.log(currentItems);
     });
 }
 
@@ -352,6 +357,32 @@ displayProduct1("all");
 displayBtn();
 
 cartData();
+
+
+const filter = () => {
+    let getInputValue = document.querySelector('#search-item').value;
+    let itemsList = document.querySelectorAll('.store-item');
+    
+
+  
+        currentItems.map(function(data1,index1){
+            if(data1.name.indexOf(getInputValue) < 0){
+                console.log(data1);
+            }
+        });
+
+
+       // let i;
+        // for(i=0; i < itemsList.length; i++){
+        //     if (itemsList[i].textContent.includes(getInputValue)){
+        //         // itemsList[i].style.display = 'block';
+        //         filterdArray.push(itemsList[i])
+        //      } else {
+        //            itemsList[i].style.display = 'none';
+        //     }
+        // } 
+        // console.log(filterdArray);
+}
 
 
 

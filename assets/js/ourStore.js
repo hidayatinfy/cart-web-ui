@@ -179,38 +179,35 @@ const singleStoreItem = (productObj) =>{
     singleItem.appendChild(mainWrapper);  
 }
 
-/*
-    Function :  hideItem()
-    Purpose: It will used to hide item after filter
-*/
-let hideItem = () => {
-    let hideItem = document.getElementsByClassName('store-item');
-    for (let i=0;i<hideItem.length;i+=1){
-        hideItem[i].style.display = 'none';
-    }
-}
-
 
 let filterArray = [];
+let filterArray11 = [];
 
-let getFilteredProduct = (category) => {
+
+
+let getFilteredProduct = (cat) => {
     filterArray = [];
-    let productList = storeItem1.map(function(data,index){
-        if(data.category == category){
+    if(cat == "all"){
+        let productList = storeItem1.map(function(data,index){
             data.item.map(function(data1,index1){
                 filterArray.unshift(data1);
             });
-        }else if(category == "all"){
-            data.item.map(function(data1,index1){
-                filterArray.unshift(data1);
-            });
+        });
+    }else{
+        for(let i=0;i<storeItem1.length;i++){
+            if(storeItem1[i].category == cat){
+                let productList = storeItem1[i].item.map(function(data,index){
+                    filterArray.unshift(data);
+                });
+                break;
+            }
         }
-    });
+    }
     displayProductList(filterArray);
 }
 
 let displayProductList = (filterProductArray) => {
-    hideItem();
+    document.getElementById("store-items").innerHTML = "";
     filterProductArray.map(function(data,index){
         singleStoreItem(data)
     });

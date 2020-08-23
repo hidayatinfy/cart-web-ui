@@ -86,6 +86,11 @@ let storeItem1 =  [
                 image: "doughnut-3.jpeg",
                 name: "Dougnut item",
                 price: 15
+            },
+            {
+                image: "doughnut-3.jpeg",
+                name: "Xyz item",
+                price: 15
             }
         ]
     }
@@ -107,7 +112,7 @@ let setAttributes = (element,attribute) => {
 */
 let generateButtonUI = (category) => {
     let filterBtn = document.createElement('a');
-    setAttributes(filterBtn, {"class": "btn btn-outline-secondary btn-black text-uppercase filter-btn m-2","href":"#", "onclick" :"displayProduct(\'" + category + "\')"});
+    setAttributes(filterBtn, {"class": "btn btn-outline-secondary btn-black text-uppercase filter-btn m-2","href":"#", "onclick" :"getFilteredProduct(\'" + category + "\')"});
     let btnText = document.createTextNode(category);
     filterBtn.appendChild(btnText);
     document.getElementById('filterBtn').appendChild(filterBtn);
@@ -119,8 +124,8 @@ let singleItem = document.getElementById('store-items');
     Function :  singleStoreItem()
     Purpose: It will create dynamic UI(Product List which is displayed in index page)
 */
-const singleStoreItem = (x, index,category) =>{
-   
+const singleStoreItem = (productObj) =>{
+    
     let mainWrapper = document.createElement('div');
     setAttributes(mainWrapper,{'class':'col-10 col-sm-6 col-lg-4 mx-auto my-3 store-item'});
 
@@ -131,13 +136,13 @@ const singleStoreItem = (x, index,category) =>{
     setAttributes(imgContainer,{'class':'img-container'});
 
     let itemImg = document.createElement('img');
-    setAttributes(itemImg,{'src': 'assets/images/' + x.image, 'alt': 'Cart Item Image','class': 'card-img-top store-img'});
+    setAttributes(itemImg,{'src': 'assets/images/' + productObj.image, 'alt': 'Cart Item Image','class': 'card-img-top store-img'});
 
     let storeIconWrap = document.createElement('span');
     setAttributes(storeIconWrap,{'class':'store-item-icon'});
 
     let storeIcon = document.createElement('i');
-    setAttributes(storeIcon,{'class':'fa fa-shopping-cart', 'onclick': 'addIntoCartItem(\'' + x.image + '\',\'' + x.name + '\',' + x.price + ')'});
+    setAttributes(storeIcon,{'class':'fa fa-shopping-cart', 'onclick': 'addIntoCartItem(\'' + productObj.image + '\',\'' + productObj.name + '\',' + productObj.price + ')'});
 
     let cardBody = document.createElement('div');
     setAttributes(cardBody,{'class':'card-body'});
@@ -148,7 +153,7 @@ const singleStoreItem = (x, index,category) =>{
     let itemName = document.createElement('h5');
     setAttributes(itemName,{'id':'store-item-name'});
 
-    let itemNameValue = document.createTextNode(x.name);
+    let itemNameValue = document.createTextNode(productObj.name);
 
     let itemPriceWrap = document.createElement('h5');
     setAttributes(itemPriceWrap,{'class':'store-item-value'});
@@ -158,7 +163,7 @@ const singleStoreItem = (x, index,category) =>{
     let itemPrice = document.createElement('strong');
     setAttributes(itemPrice,{'class':'font-weight-bold', 'id':'store-item-price'});
 
-    let itemPriceValue = document.createTextNode(x.price);
+    let itemPriceValue = document.createTextNode(productObj.price);
 
 
     mainWrapper.appendChild(card);
@@ -179,69 +184,51 @@ const singleStoreItem = (x, index,category) =>{
     singleItem.appendChild(mainWrapper);  
 }
 
-/*
-    Function :  hideItem()
-    Purpose: It will used to hide item after filter
-*/
-let hideItem = () => {
-    let hideItem = document.getElementsByClassName('store-item');
-    for (let i=0;i<hideItem.length;i+=1){
-        hideItem[i].style.display = 'none';
+
+let filterArray = [];
+
+let getFilteredProduct = (cat) => {
+    filterArray = [];
+    if(cat == "all"){
+        let productList = storeItem1.map(function(data,index){
+            data.item.map(function(data1,index1){
+                filterArray.unshift(data1);
+            });
+        });
+    }else{
+        for(let i=0;i<storeItem1.length;i++){
+            if(storeItem1[i].category == cat){
+                let productList = storeItem1[i].item.map(function(data,index){
+                    filterArray.unshift(data);
+                });
+                break;
+            }
+        }
     }
+    displayProductList(filterArray);
 }
 
-/*
-    Function :  displayProduct()
-    Purpose: It will used to Display Product
-*/
-let currentItems =[];
-let displayProduct = (category) => {
-    hideItem();
-    currentItems =[];
-    let productList = storeItem1.map(function(data,index){
-        if(data.category == category){
-            currentItems.push(data);
-            // console.log(data);
-            data.item.map(function(data1,index1){
-                singleStoreItem(data1,index1,data.category);
-            });
-        }else if(category == "all"){
-            data.item.map(function(data1,index1){
-                singleStoreItem(data1,index1,'');
-            });
-        }
-        // console.log(currentItems);
+let displayProductList = (filterProductArray) => {
+    document.getElementById("store-items").innerHTML = "";
+    filterProductArray.map(function(data,index){
+        singleStoreItem(data)
     });
 }
 
-/*
-    Function :  displayProduct1()
-    Purpose: It will used to Display Product
-*/
-let displayProduct1 = (category) => {
-    let productList = storeItem1.map(function(data,index){
-        if(data.category == category){
-            data.item.map(function(data1,index1){
-                singleStoreItem(data1,index1);
-            });
-        }else if(category == "all"){
-            data.item.map(function(data1,index1){
-                singleStoreItem(data1,index1);
-            });
-        }
-    });
-}
 
 
 /*
     Function :  displayBtn()
     Purpose: It will used to Display Button
 */
-let displayBtn = () => {
+let categoryArray = [];
+let displayBtn = (product) => {
     generateButtonUI('all')
-    storeItem1.map(function(data,index){
-        generateButtonUI(data.category);
+    product.map(function(data,index){
+        generateButtonUI(data.category,product);
     });
+
+
 }
 
 /*
@@ -352,41 +339,36 @@ let clearCart = () => {
     cartData();
 }
 
-displayProduct1("all");
-
-displayBtn();
-
-cartData();
 
 
+searchResult = [];
 const filter = () => {
+    searchResult = [];
     let getInputValue = document.querySelector('#search-item').value;
     let itemsList = document.querySelectorAll('.store-item');
-    
-
-  
-        currentItems.map(function(data1,index1){
-            if(data1.name.indexOf(getInputValue) < 0){
-                console.log(data1);
-            }
-        });
-
-
-       // let i;
-        // for(i=0; i < itemsList.length; i++){
-        //     if (itemsList[i].textContent.includes(getInputValue)){
-        //         // itemsList[i].style.display = 'block';
-        //         filterdArray.push(itemsList[i])
-        //      } else {
-        //            itemsList[i].style.display = 'none';
-        //     }
-        // } 
-        // console.log(filterdArray);
+    for(let i=0;i<filterArray.length;i++){
+        if(filterArray[i].name.indexOf(getInputValue) != -1){
+            searchResult.unshift(filterArray[i]);
+        }
+    }
+        console.log(searchResult);
+        displayProductList(searchResult);
 }
 
+var debounce = (func, delay) => {
+    let Timer
+    return function() {
+       clearTimeout(Timer)
+       Timer= setTimeout(() =>
+       filter(), 300)
+    }
+ }
 
+var myEfficientFn = debounce(filter,300);
 
+getFilteredProduct("all");
 
+displayBtn(storeItem1);
 
-
+cartData();
 

@@ -181,9 +181,6 @@ const singleStoreItem = (productObj) =>{
 
 
 let filterArray = [];
-let filterArray11 = [];
-
-
 
 let getFilteredProduct = (cat) => {
     filterArray = [];
@@ -336,6 +333,35 @@ let clearCart = () => {
     myCart.splice(0,myCart.length);
     cartData();
 }
+
+
+searchResult = [];
+const filter = () => {
+    //console.log("Hi");
+    let getInputValue = document.querySelector('#search-item').value;
+    let itemsList = document.querySelectorAll('.store-item');
+    //console.log(filterArray);
+    for(let i=0;i<filterArray.length;i++){
+        console.log(filterArray[i]);
+        if(filterArray[i].name.indexOf(getInputValue) != -1){
+            searchResult.unshift(filterArray[i]);
+        }
+    }
+        // filterArray.map(function(filtData,filtIndex){
+            
+            
+        //           if(filtData.name.indexOf(getInputValue) != -1){
+        //               document.getElementById('store-items').innerHTML = "";
+        //               //searchResult.push(data2[j]);
+        //               searchResult.unshift(filtData);
+        //               //singleStoreItem(data2[j],j);
+        //           }
+             
+        // });
+        console.log(searchResult);
+        //displayProductList(searchResult);
+}
+
 
 getFilteredProduct("all");
 

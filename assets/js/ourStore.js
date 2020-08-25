@@ -361,7 +361,6 @@ const filter = () => {
     }else{
         displayProductList(filterArray);
     }
-    // displayProductList(searchResult);
 }
 
 

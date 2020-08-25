@@ -1,3 +1,4 @@
+
 /*
     myCart Array
 */
@@ -87,9 +88,10 @@ let storeItem1 =  [
                 name: "Dougnut item",
                 price: 15
             },
+            
             {
                 image: "doughnut-3.jpeg",
-                name: "Xyz item",
+                name: "xyz item",
                 price: 15
             }
         ]
@@ -340,35 +342,31 @@ let clearCart = () => {
 }
 
 
-
-searchResult = [];
 const filter = () => {
-    searchResult = [];
     let getInputValue = document.querySelector('#search-item').value;
-    let itemsList = document.querySelectorAll('.store-item');
+    //let itemsList = document.querySelectorAll('.store-item');
+    searchResult = [];
     for(let i=0;i<filterArray.length;i++){
-        if(filterArray[i].name.indexOf(getInputValue) != -1){
+        let filterGetValue = filterArray[i].name.indexOf(getInputValue) ;
+        if(getInputValue == ''){
+            document.querySelector('#store-items').innerHTML = "";
+        }else if(filterGetValue != -1){
+            document.querySelector('#store-items').innerHTML = "";
             searchResult.unshift(filterArray[i]);
         }
     }
-        console.log(searchResult);
+    console.log(searchResult);
+    if(searchResult.length > 0){
         displayProductList(searchResult);
+    }else{
+        displayProductList(filterArray);
+    }
+    // displayProductList(searchResult);
 }
 
-var debounce = (func, delay) => {
-    let Timer
-    return function() {
-       clearTimeout(Timer)
-       Timer= setTimeout(() =>
-       filter(), 300)
-    }
- }
-
-var myEfficientFn = debounce(filter,300);
 
 getFilteredProduct("all");
 
 displayBtn(storeItem1);
 
 cartData();
-
